@@ -4,32 +4,35 @@ import Location from "./Location"
 import WeatherData from "./WeatherData";
 import "./styles.css";
 import transforWeather from "../../services/transforWeather";
-import {api_weather} from "./../../constants/api_url";
-
+import PropTypes from 'prop-types';
+import getUrlWeatherByCity from "../../services/getUrlWeatherByCity";
 
 
 
 class WeatherLocation extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+
+        const {city} = props;
+
         this.state ={
-            city: 'Austin',
+            city,
             data: null,
         };
-        console.log("constructor");
+  
         
     }
 
     componentDidMount() {
-        console.log("componentDidMount");
+  
         this.handleUpdateClick();
         
     }
 
     componentDidUpdate(prevProps, prevState) {
         
-        console.log("componentDidUpdate");
+        
         
     }
 
@@ -37,13 +40,13 @@ class WeatherLocation extends Component {
 
     handleUpdateClick = () =>{
 
+        const api_weather = getUrlWeatherByCity(this.state.city);
+
         fetch(api_weather).then( resolve =>{
             return resolve.json();
             
         }).then( data =>{
-            console.log("rESULTADO HANDLE"); 
             const newWeather = transforWeather(data);
-            console.log(newWeather);
             this.setState({
                 data: newWeather
             });
@@ -54,7 +57,6 @@ class WeatherLocation extends Component {
     }
 
     render(){
-        console.log("RENDER");
         
         const { city, data} = this.state;
          return (
@@ -65,5 +67,9 @@ class WeatherLocation extends Component {
     );
   }
 }  
+
+WeatherLocation.propTypes ={
+    city : PropTypes.string.isRequired,
+}
 
 export default WeatherLocation;
