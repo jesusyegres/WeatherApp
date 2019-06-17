@@ -1,25 +1,13 @@
 import React, {Component} from "react";
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Location from "./Location"
 import WeatherData from "./WeatherData";
 import "./styles.css";
-import {
-    SNOW,
-    SUN,
-} from "../../constants/weather";
+import transforWeather from "../../services/transforWeather";
+import {api_weather} from "./../../constants/api_url";
 
-const data = {
-    temperature: 5,
-    weatherState: SNOW,
-    humidity: 10,
-    wind:"11 m/s",
-}
 
-const data2 = {
-    temperature: 50,
-    weatherState: SUN,
-    humidity: 20,
-    wind:"19 m/s",
-}
+
 
 class WeatherLocation extends Component {
 
@@ -27,28 +15,52 @@ class WeatherLocation extends Component {
         super();
         this.state ={
             city: 'Austin',
-            data: data,
+            data: null,
         };
+        console.log("constructor");
+        
     }
 
-    handleUpdateClick = () =>{
-        console.log("actualizado");
-        this.setState({
-            city: 'Puerto Ordaz',
-            data:data2,
-        })
+    componentDidMount() {
+        console.log("componentDidMount");
+        this.handleUpdateClick();
+        
+    }
 
+    componentDidUpdate(prevProps, prevState) {
         
+        console.log("componentDidUpdate");
         
+    }
+
+    
+
+    handleUpdateClick = () =>{
+
+        fetch(api_weather).then( resolve =>{
+            return resolve.json();
+            
+        }).then( data =>{
+            console.log("rESULTADO HANDLE"); 
+            const newWeather = transforWeather(data);
+            console.log(newWeather);
+            this.setState({
+                data: newWeather
+            });
+            
+        });
+
+
     }
 
     render(){
+        console.log("RENDER");
+        
         const { city, data} = this.state;
          return (
             <div className="weatherLocationCont">
                 <Location city={city}></Location> 
-                <WeatherData data={data}></WeatherData>
-                <button onClick={this.handleUpdateClick}>Actualizar</button>
+                {data ? <WeatherData data={data}></WeatherData> : <LinearProgress size={50}/>}
             </div>
     );
   }
