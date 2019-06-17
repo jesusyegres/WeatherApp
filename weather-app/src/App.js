@@ -11,9 +11,12 @@ const cities = [
 ]
 
 function App() {
+  const handleSelectionLocation = city =>{
+    console.log("handleSelectionLocation");
+  }
   return (
     <div className="App">
-        <LocationList cities={cities}></LocationList>
+        <LocationList cities={cities} onSelectedLocation={handleSelectionLocation}></LocationList>
     </div>
   );
 }
