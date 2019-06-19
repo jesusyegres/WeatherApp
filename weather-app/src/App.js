@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {Grid,Col,row, Row} from 'react-flexbox-grid';
 import './App.css';
 import LocationList from './components/LocationList';
 
@@ -10,15 +11,25 @@ const cities = [
   'madrid,es'
 ]
 
-function App() {
-  const handleSelectionLocation = city =>{
+class App extends Component{
+  
+  handleSelectionLocation = city =>{
     console.log("handleSelectionLocation");
   }
-  return (
-    <div className="App">
-        <LocationList cities={cities} onSelectedLocation={handleSelectionLocation}></LocationList>
-    </div>
-  );
+  render(){
+    return (
+          <Grid>
+          <Row>
+
+          </Row>
+          <Row>
+          <LocationList cities={cities} onSelectedLocation={this.handleSelectionLocation}/>
+          </Row>
+           </Grid>
+    );
+
+  }
+
 }
 
 export default App;
