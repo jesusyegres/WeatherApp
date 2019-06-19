@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import WeatherLocation from './weatherLocation';
-
+import './styless.css';
 
 const LocationList = ({cities, onSelectedLocation}) => {
     const handleWeatherLocationClick = city =>{
@@ -20,7 +20,7 @@ const LocationList = ({cities, onSelectedLocation}) => {
     );
 
    return (
-   <div>
+   <div className="LocationList">
        {getCity(cities)}
     </div>
 );
