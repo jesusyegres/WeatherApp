@@ -1,7 +1,12 @@
+.LocationList{ 
+    max-height: 85vh;
+    overflow: scroll;
+    
+}
+
 @media (max-width: 64em){
     .LocationList{ 
-        max-height: 30vh;
-        overflow: scroll;
+        max-height: 40vh;
         margin-bottom: 20px;
     }
 }
