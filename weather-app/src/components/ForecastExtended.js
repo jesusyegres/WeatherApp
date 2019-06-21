@@ -55,7 +55,6 @@ class ForecastExtended extends Component {
                 console.log(weather_data);  
                 const forecastData = transforForecast(weather_data);
                 console.log(forecastData);
-                
                 this.setState({
                     forecastData
                 })
@@ -64,15 +63,14 @@ class ForecastExtended extends Component {
     }
 
     renderForecastItemDays(forecastData) {
-     
-        
        return forecastData.map( forecast =>
            (<ForecastItem   key={`${forecast.weekDay}${forecast.hour}`}
-                            weekday={forecast.weekday}   
+                            weekDay={forecast.weekDay}   
                             hour={forecast.hour} 
                             data={forecast.data}></ForecastItem>));
-
     }
+
+
 
     renderProgress = () =>{
         return <h3>"cargando Pronostico extendido .. "</h3>;
@@ -97,6 +95,7 @@ class ForecastExtended extends Component {
 
 ForecastExtended.propTypes = {
     city:PropTypes.string.isRequired,
+    forecastData: PropTypes.array,
 }
 
 export default ForecastExtended;
