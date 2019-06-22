@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Paper from '@material-ui/core/Paper';
+import { createStore} from 'redux';
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -16,6 +17,8 @@ const cities = [
   'madrid,es'
 ]
 
+const store = createStore(() =>{}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTESION__());
+
 class App extends Component{
 
   constructor(){
@@ -28,7 +31,11 @@ class App extends Component{
       city
     });
     console.log(`handleSelectionLocation ${city}`);
+    const action = { type:'setCity', value: city}
+    store.dispatch(action)
   }
+
+
   render(){
     const {city} = this.state;
     return (
