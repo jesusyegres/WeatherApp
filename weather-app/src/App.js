@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { connect} from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -8,7 +9,7 @@ import './App.css';
 import LocationList from './components/LocationList';
 import ForecastExtended from './components/ForecastExtended';
 import { setCity} from './actions';
-import { store } from './store';
+
 
 const cities = [
   'Buenos Aires,ar',
@@ -17,6 +18,8 @@ const cities = [
   'washington,us',
   'madrid,es'
 ]
+
+
 
 class App extends Component{
 
@@ -30,7 +33,7 @@ class App extends Component{
       city
     });
     console.log(`handleSelectionLocation ${city}`);
-    store.dispatch(setCity(city));
+    this.props.setCity(city);
   }
 
 
@@ -71,4 +74,10 @@ class App extends Component{
 
 }
 
-export default App;
+const mapDispatchToPropsActions = dispatch => ({
+  setCity: value => dispatch(setCity(value))
+});
+
+const AppConnected = connect(null, mapDispatchToPropsActions)(App)
+
+export default AppConnected;
