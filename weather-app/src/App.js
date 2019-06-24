@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect} from 'react-redux';
 import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -33,7 +34,7 @@ class App extends Component{
       city
     });
     console.log(`handleSelectionLocation ${city}`);
-    this.props.setCity(city);
+    this.props.dispatchSetCity(city);
   }
 
 
@@ -74,10 +75,14 @@ class App extends Component{
 
 }
 
-const mapDispatchToPropsActions = dispatch => ({
-  setCity: value => dispatch(setCity(value))
-});
+App.propTypes = {
+  dispatchSetCity : PropTypes.func.isRequired,
+}
 
-const AppConnected = connect(null, mapDispatchToPropsActions)(App)
+const mapDispatchToProps= dispatch => (
+  {
+  dispatchSetCity: value => dispatch(setCity(value))
+  }
+);
 
-export default AppConnected;
+export default connect(null, mapDispatchToProps)(App)
