@@ -13,7 +13,7 @@ const setForecastData = payload => ({ type: SET_FORECAST_DATA, payload });
 const getWeatherCity = payload => ({type: GET_WEATHER_CITY, payload });
 const setWeatherCity = payload => ({type: SET_WEATHER_CITY, payload });
 
-const api_key = "f99bbd9e4959b513e9bd0d7f7356b38d";
+const api_key = "8397be7c2629753adf7bb678899a2d3a";
 const url = "http://api.openweathermap.org/data/2.5/forecast";
 const url_weather = "http://api.openweathermap.org/data/2.5/weather";
 
@@ -40,7 +40,6 @@ export const setSelectedCity = payload => {
             weather_data => {
                 const forecastData = transforForecast(weather_data);
                 console.log(forecastData);
-                
                 // modificar el estado con el resultado de la promise (fetch)
                 dispatch(setForecastData({city: payload, forecastData }));
             }
