@@ -1,48 +1,50 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { connect} from 'react-redux';
-import { setSelectedCity, setWeather} from './../actions';
+import { connect } from 'react-redux';
+import * as actions from './../actions'
+import { getWeatherCities, getCity } from './../reducers';
 import LocationList from './../components/LocationList';
-import {getWeatherCities} from './../reducers'
 
 class LocationListContainer extends Component {
 
-   componentDidMount() {
-    this.props.setWeather(this.props.cities);
-   }
-   
+    componentDidMount() {
+        const { setWeather, setSelectedCity, cities, city } = this.props;
 
-    handleSelectionLocation = city =>{
-        this.props.dispatchSetCity(city);
-      }
+        setWeather(cities);
+
+        setSelectedCity(city);
+    }
     
+    handleSelectedLocation = city => {
+        this.props.setSelectedCity(city);
+    }
+        
     render() {
         return (
-            <LocationList 
-            cities={this.props.cities} 
-            onSelectedLocation={this.handleSelectionLocation}/>
-           
+            <LocationList cities={this.props.citiesWeather} 
+              onSelectedLocation={this.handleSelectedLocation} ></LocationList>
         );
     }
 }
 
 LocationListContainer.propTypes = {
-    dispatchSetCity : PropTypes.func.isRequired,
-    cities:PropTypes.array.isRequired,
-    citiesWeather:PropTypes.array,
+    setSelectedCity: PropTypes.func.isRequired,
+    setWeather: PropTypes.func.isRequired,
+    cities: PropTypes.array.isRequired,
+    citiesWeather: PropTypes.array,
+    city: PropTypes.string.isRequired,
 };
 
-const mapDispatchToProps= dispatch => (
-    {
-    dispatchSetCity: value => dispatch(setSelectedCity(value)),
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+/*const mapDispatchToProps = dispatch => ({
+    setSelectedCity: value => dispatch(setSelectedCity(value)),
     setWeather: cities => dispatch(setWeather(cities)),
-    }
-  );
+});*/
 
-  //hola
-
-  const mapStateToProps =state =>({
-      citiesWeather: getWeatherCities(state)
-  })
+const mapStateToProps = state => ({
+    citiesWeather: getWeatherCities(state),
+    city: getCity(state)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LocationListContainer);
