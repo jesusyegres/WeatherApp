@@ -22,7 +22,7 @@ export const setSelectedCity = payload => {
     return (dispatch, getState) => {
         const url_forecast = `${url}?q=${payload}&appid=${api_key}`;
         
-        // activar en el estado un indicador de busqueda de datos
+      
         dispatch(setCity(payload));
 
         const state = getState();
@@ -40,7 +40,7 @@ export const setSelectedCity = payload => {
             weather_data => {
                 const forecastData = transforForecast(weather_data);
                 console.log(forecastData);
-                // modificar el estado con el resultado de la promise (fetch)
+              
                 dispatch(setForecastData({city: payload, forecastData }));
             }
         ); 
